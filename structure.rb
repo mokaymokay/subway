@@ -26,6 +26,10 @@ class Subway
   end
 
   def calculate_distance(start_line, start_stop, end_line, end_stop)
+    # TODO: add ability to have two transfer points
+    # (1) if F <--> Q - only calculate transfer distance at herald sq
+    # (2) if not F - only calculate transfer distance at union sq
+    # (3) else... (if F + !Q are involved) calculate both above and sum
     start_line = start_line.to_sym
     end_line = end_line.to_sym
 
