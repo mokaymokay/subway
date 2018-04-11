@@ -1,5 +1,5 @@
 class Subway
-  attr_accessor :lines
+  attr_reader :lines
 
   def initialize(lines = {})
     @lines = lines
@@ -17,7 +17,8 @@ class Subway
   end
 
   def display_lines
-    puts @lines.keys
+    print @lines.keys.join(", ")
+    puts
   end
 
   def display_stops(name)
@@ -25,13 +26,28 @@ class Subway
   end
 
   def calculate_distance(start_line, start_stop, end_line, end_stop)
+
     if start_line == end_line
-      distance = @lines[start_line.to_sym].index(start_stop) - @lines[end_line.to_sym].index(end_stop)
-      puts distance.abs
+      dist = @lines[start_line.to_sym].index(start_stop) - @lines[end_line.to_sym].index(end_stop)
+      puts dist.abs
     else
-      start_distance_from_union_sq = @lines[start_line.to_sym].index(start_stop) - @lines[start_line.to_sym].index("union_square")
-      end_distance_from_union_sq = @lines[end_line.to_sym].index(end_stop) - @lines[end_line.to_sym].index("union_square")
-      puts start_distance_from_union_sq.abs + end_distance_from_union_sq.abs
+      # if traveling to/from F train stop
+      if start_line == "F" || end_line == "F"
+         # AND not traveling to/from Q train stop
+        if start_line != "Q" && end_line != "Q"
+          puts "You'll have to transfer more than once"
+          # calculate using herald square transfer point
+        else
+          start_dist_from_herald_sq = @lines[start_line.to_sym].index(start_stop) - @lines[start_line.to_sym].index("herald_square")
+          end_dist_from_herald_sq = @lines[end_line.to_sym].index(end_stop) - @lines[end_line.to_sym].index("herald_square")
+          puts start_dist_from_herald_sq.abs + end_dist_from_herald_sq.abs
+        end
+        # rest of the trains have union square as transfer point
+      else
+        start_dist_from_union_sq = @lines[start_line.to_sym].index(start_stop) - @lines[start_line.to_sym].index("union_square")
+        end_dist_from_union_sq = @lines[end_line.to_sym].index(end_stop) - @lines[end_line.to_sym].index("union_square")
+        puts start_dist_from_union_sq.abs + end_dist_from_union_sq.abs
+      end
     end
   end
 
@@ -45,7 +61,3 @@ class Line
   end
 
 end
-
-# p mta
-# mta.display_lines
-# mta.display_stops("N")
