@@ -37,14 +37,14 @@ else
         elsif not mta.lines[ARGV[3].to_sym].include?(ARGV[4])
           puts "The " + ARGV[3] + " train does not have that stop"
         else
-          mta.calculate_distance(ARGV[1], ARGV[2], ARGV[3], ARGV[4])
+          puts mta.calculate_distance(ARGV[1], ARGV[2], ARGV[3], ARGV[4])
         end
       else
         print "We only have the following lines: "
         mta.display_lines
       end
     else
-      puts "You must provide STARTINGLINE STOP ENDINGLINE STOP, i.e. 'ruby mta.rb calculate 6 astor_place N times_square'"
+      puts "You must provide START_LINE START_STOP END_LINE END_STOP, i.e. 'ruby mta.rb calculate 6 astor_place N times_square'"
     end
   else
     mta.help
